@@ -16,7 +16,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   int n = 0;
   // length of our merged array of unique values
   int k = 0;
-  
+	
   // increment temp array by one (capturing a unique zero that otherwise would be looked over)
   if(containsZero(values, num_arrays, sizes, temp)){
 	n++;
@@ -42,8 +42,8 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   // sort our temp array
   mergesort(k,temp);
 
-  int* finalArray = resizeArray(temp, k);
   // make sure we also put the length in there
+  int* finalArray = resizeArray(temp,k);
   finalArray[0] = k;
   return finalArray;
 }
