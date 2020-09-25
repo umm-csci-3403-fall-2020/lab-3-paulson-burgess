@@ -14,12 +14,13 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   int n = 0;
   // length of our merged array of unique values
   int k = 0;
+  bool result;
   // while we haven't gone through all of the exterior arrays...
   for(int i = 0; i < num_arrays; i++){
   	  // so long as there is still stuff to iterate through in the interior array...
 	  for(int j = 0; j < sizes[i]; ++j){
 		  // and our temp array doesn't already have the value stored in that index...
-		  if(!(isIn(values[i][j], temp, k))){
+		  if(!(result = isIn(values[i][j], temp, k))){
 		  // it's a unique value -> chuck it in our temp array.
 	  	  temp[n] = values[i][j];
 		  // we only increment temp stuff in our if statement so we don't get gaps in the array
@@ -28,12 +29,14 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
 		  }
 	  }
   }
+ 
   // sort our temp array
   mergesort(k,temp);
-
+  int* finalArray = (int*) malloc((k+1)* sizeof(int));
   // make sure we also put the length in there
-  int* finalArray = resizeArray(temp,k);
-  finalArray[0] = k;
+  resizeArray(temp,finalArray,k);
+  free(temp);
+  finalArray[0] = k; 
   return finalArray;
 }
    // function that checks to see if the passed array already has the passed value in it
@@ -47,14 +50,11 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
    return false;
    }
    // copies the values in our temporary array into a resized array that only allocates exactly the memory it needs.
-   int* resizeArray(int* array,int k){
-	   int* resizedArray = (int*) malloc((k + 1)* sizeof(int));
+   void resizeArray(int* array,int* newArray,int k){
+	   
 	   // starts copying at index 1 instead of 0 to leave room for k at the start.
 	   for(int i = 0; i < k; i++) {
-		   resizedArray[i + 1] = array[i];
-	   }
-	   // should be able to free the memory given to temp now
-	   free(array);
-	   return resizedArray;
+		   newArray[i + 1] = array[i];
+	   }  
    }
 	
