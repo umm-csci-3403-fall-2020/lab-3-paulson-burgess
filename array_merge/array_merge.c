@@ -36,7 +36,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   // make sure we also put the length in there
   resizeArray(temp,finalArray,k);
   free(temp);
-  finalArray[0] = k; 
+  finalArray[0] = k;
   return finalArray;
 }
    // function that checks to see if the passed array already has the passed value in it
